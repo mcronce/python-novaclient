@@ -812,7 +812,7 @@ class ServerManager(base.BootingManagerWithFind):
         return self._get("/servers/%s" % base.getid(server), "server")
 
     def list(self, detailed=True, search_opts=None, marker=None, limit=None,
-             sort_keys=None, sort_dirs=None):
+             sort_keys=None, sort_dirs=None, **kwargs):
         """
         Get a list of servers.
 
@@ -827,6 +827,7 @@ class ServerManager(base.BootingManagerWithFind):
         :param limit: Maximum number of servers to return (optional).
         :param sort_keys: List of sort keys
         :param sort_dirs: List of sort directions
+        :param **kwargs: Passed through to base._list()
 
         :rtype: list of :class:`Server`
 
@@ -882,7 +883,7 @@ class ServerManager(base.BootingManagerWithFind):
                 query_string = ""
 
             servers = self._list("/servers%s%s" % (detail, query_string),
-                                 "servers")
+                                 "servers", **kwargs)
             result.extend(servers)
             result.append_request_ids(servers.request_ids)
 
